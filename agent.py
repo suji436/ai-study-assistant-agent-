@@ -1,4 +1,3 @@
-
 import os
 from google import genai
 
@@ -14,17 +13,34 @@ def study_agent():
     print("Welcome to AI Study Assistant!")
     topic = input("What topic do you want to learn? ")
 
+    # Topic explanation
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=(
-            f"Explain {topic} to a beginner. "
-            "Give a simple explanation, key points, "
-            "and three practice questions."
-        )
+        model="gemini-3.8-flash",
+        contents=f"""
+        Explain {topic} in simple beginner-friendly language.
+        Give:
+        1. A simple explanation
+        2. Five key points
+        3. A real-world example
+        """
     )
 
-    print("\nYour study notes:\n")
+    print("\nSTUDY NOTES\n")
     print(response.text)
+
+    # Quiz mode
+    quiz = client.models.generate_content(
+        model="gemini-3.8-flash",
+        contents=f"""
+        Create 3 multiple-choice quiz questions about {topic}.
+        Give 4 options for each question.
+        Do not show the answers yet.
+        """
+    )
+
+    print("\nQUIZ\n")
+    print(quiz.text)
+
 
 if __name__ == "__main__":
     study_agent()
