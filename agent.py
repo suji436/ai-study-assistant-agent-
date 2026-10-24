@@ -1,9 +1,9 @@
 import os
 from google import genai
 
+
 def study_agent():
     api_key = os.getenv("GEMINI_API_KEY")
-
     if not api_key:
         print("GEMINI_API_KEY is not configured.")
         return
@@ -13,7 +13,6 @@ def study_agent():
     print("Welcome to AI Study Assistant!")
     topic = input("What topic do you want to learn? ")
 
-    # Topic explanation
     response = client.models.generate_content(
         model="gemini-3.8-flash",
         contents=f"""
@@ -28,7 +27,6 @@ def study_agent():
     print("\nSTUDY NOTES\n")
     print(response.text)
 
-    # Quiz mode
     quiz = client.models.generate_content(
         model="gemini-3.8-flash",
         contents=f"""
